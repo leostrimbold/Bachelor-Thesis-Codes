@@ -1,0 +1,74 @@
+description: |-
+  nits(length='cm', time='s', quantity='mol', act_energy='cal/mol')
+
+generator: cti2yaml
+cantera-version: 3.0.0b1
+date: Fri, 09 Feb 2024 11:51:13 +0100
+input-files: [N2O4_eq.cti]
+
+units: {length: cm, quantity: mol, activation-energy: cal/mol}
+
+phases:
+- name: gas
+  thermo: ideal-gas
+  elements: [O, N]
+  species: [N2O4, NO2, NO, O2]
+  kinetics: gas
+  reactions: all
+  state:
+    T: 300.0
+    P: 1.01325e+05
+
+species:
+- name: N2O4
+  composition: {O: 4, N: 2}
+  thermo:
+    model: NASA7
+    temperature-ranges: [100.0, 1000.0, 5000.0]
+    data:
+    - [3.624593, 0.02474708, -2.172875e-05, 9.927104e-09, -2.222817e-12,
+      -912.8241, 9.457174]
+    - [10.4822, 5.972272e-03, -2.564044e-06, 4.916885e-10, -3.490969e-14,
+      -2849.989, -26.12289]
+  note: '121286'
+- name: NO2
+  composition: {O: 2, N: 1}
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 5000.0]
+    data:
+    - [2.6706, 7.838501e-03, -8.063865e-06, 6.161715e-09, -2.32015e-12,
+      2896.291, 11.61207]
+    - [4.682859, 2.462429e-03, -1.042259e-06, 1.976902e-10, -1.391717e-14,
+      2261.292, 0.9885985]
+  note: '121286'
+- name: NO
+  composition: {O: 1, N: 1}
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 5000.0]
+    data:
+    - [3.376542, 1.253063e-03, -3.302751e-06, 5.21781e-09, -2.446263e-12,
+      9817.961, 5.82959]
+    - [3.245435, 1.269138e-03, -5.01589e-07, 9.169283e-11, -6.275419e-15,
+      9800.84, 6.417294]
+  note: '121286'
+- name: O2
+  composition: {O: 2}
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 5000.0]
+    data:
+    - [3.212936, 1.127486e-03, -5.75615e-07, 1.313877e-09, -8.768554e-13,
+      -1005.249, 6.034738]
+    - [3.697578, 6.135197e-04, -1.258842e-07, 1.775281e-11, -1.136435e-15,
+      -1233.93, 3.189166]
+  note: '121386'
+
+reactions:
+- equation: N2O4 + M <=> 2 NO2 + M  # Reaction 1
+  type: three-body
+  rate-constant: {A: 1.98e+17, b: 0.0, Ea: 1.2849e+04}
+- equation: NO2 + NO2 <=> NO + NO + O2  # Reaction 2
+  rate-constant: {A: 1.63e+12, b: 0.0, Ea: 2.6076e+04}
+ 
